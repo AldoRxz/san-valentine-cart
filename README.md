@@ -108,10 +108,5 @@ san-valentine-cart/
 └── package.json
 ```
 
-## 💝 License
-
-Made with ❤️ for that special someone.
-
----
 
 **Happy Valentine's Day!** 💕
