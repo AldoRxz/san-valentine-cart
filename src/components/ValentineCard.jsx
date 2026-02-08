@@ -59,6 +59,15 @@ function ValentineCard({ onReset }) {
                     </div>
                 </header>
 
+                {/* Anime GIF */}
+                <div className="anime-gif-container">
+                    <img
+                        src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExemp0aHNoeHpsNmg5cnJhYzk3MmF2ZHdlcXU2NTc2dThhOXFqenZwdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eHvTEDvKPjdc4ovRUb/giphy.gif"
+                        alt="Anime couple"
+                        className="anime-gif"
+                    />
+                </div>
+
                 {/* Message */}
                 <div className={`card-message ${showMessage ? 'show' : ''}`}>
                     <p className="message-text">

@@ -223,6 +223,50 @@
     }
 }
 
+/* Anime GIF */
+.anime-gif-container {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+    opacity: 0;
+    animation: fadeInGif 1s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.anime-gif {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid rgba(249, 168, 212, 0.6);
+    box-shadow:
+        0 10px 30px rgba(236, 72, 153, 0.25),
+        0 0 0 8px rgba(252, 231, 243, 0.5),
+        inset 0 0 20px rgba(255, 255, 255, 0.3);
+    transition: all 0.4s ease;
+}
+
+.anime-gif:hover {
+    transform: scale(1.05);
+    border-color: #f472b6;
+    box-shadow:
+        0 15px 40px rgba(236, 72, 153, 0.35),
+        0 0 0 10px rgba(252, 231, 243, 0.6),
+        inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes fadeInGif {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 /* Message */
 .card-message {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(253, 242, 248, 0.5) 100%);
