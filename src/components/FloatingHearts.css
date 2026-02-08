@@ -1,0 +1,42 @@
+.floating-hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -50px;
+    animation: floatUp linear forwards;
+    filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4));
+    will-change: transform;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: var(--opacity, 0.7);
+    }
+
+    50% {
+        transform: translateY(-50vh) rotate(180deg) scale(1);
+    }
+
+    95% {
+        opacity: var(--opacity, 0.7);
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg) scale(0.8);
+        opacity: 0;
+    }
+}

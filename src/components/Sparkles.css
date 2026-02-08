@@ -1,0 +1,34 @@
+.sparkles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.sparkle {
+    position: absolute;
+    background: radial-gradient(circle, #fde68a 0%, #fbbf24 50%, transparent 70%);
+    border-radius: 50%;
+    animation: sparkleAnim ease-in-out infinite;
+    box-shadow:
+        0 0 10px #fbbf24,
+        0 0 20px #fde68a,
+        0 0 30px rgba(251, 191, 36, 0.5);
+}
+
+@keyframes sparkleAnim {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+    }
+}

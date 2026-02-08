@@ -1,0 +1,418 @@
+.valentine-card {
+    position: relative;
+    max-width: 500px;
+    width: 95vw;
+    transform: scale(0.8) translateY(60px);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.valentine-card.visible {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+/* Glow Effect */
+.card-glow {
+    position: absolute;
+    inset: -30px;
+    background: radial-gradient(ellipse at center, rgba(236, 72, 153, 0.25) 0%, transparent 70%);
+    border-radius: 40px;
+    z-index: -1;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+/* Card Inner */
+.card-inner {
+    background: linear-gradient(145deg, #ffffff 0%, #fffbfc 30%, #fff5f8 60%, #fdf2f8 100%);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    box-shadow:
+        0 30px 80px rgba(190, 24, 93, 0.15),
+        0 15px 40px rgba(236, 72, 153, 0.1),
+        inset 0 2px 0 rgba(255, 255, 255, 1),
+        inset 0 -3px 15px rgba(252, 231, 243, 0.5);
+    border: 2px solid rgba(249, 168, 212, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(249, 168, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(244, 114, 182, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Decorative Corners */
+.corner {
+    position: absolute;
+    font-size: 1.4rem;
+    animation: cornerTwinkle 2.5s ease-in-out infinite;
+    z-index: 5;
+}
+
+.top-left {
+    top: 1rem;
+    left: 1rem;
+}
+
+.top-right {
+    top: 1rem;
+    right: 1rem;
+    animation-delay: 0.6s;
+}
+
+.bottom-left {
+    bottom: 1rem;
+    left: 1rem;
+    animation-delay: 0.3s;
+}
+
+.bottom-right {
+    bottom: 1rem;
+    right: 1rem;
+    animation-delay: 0.9s;
+}
+
+@keyframes cornerTwinkle {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(15deg);
+    }
+}
+
+/* Header */
+.card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.hearts-decoration {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.heart-icon {
+    font-size: 2rem;
+    animation: heartBeat 1.3s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.15s);
+    display: inline-block;
+}
+
+@keyframes heartBeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.25);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.15);
+    }
+}
+
+.card-title {
+    font-family: var(--font-script);
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.title-line {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 50%, #db2777 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerText 3s linear infinite;
+    display: inline-block;
+}
+
+@keyframes shimmerText {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.recipient-name {
+    font-family: var(--font-script);
+    font-size: 2rem;
+    color: #db2777;
+    margin: 0.5rem 0 0;
+    font-weight: 600;
+}
+
+.for-text {
+    font-size: 1.4rem;
+    color: #f472b6;
+    font-weight: 400;
+}
+
+.title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.deco-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f9a8d4, #f472b6, #f9a8d4, transparent);
+    border-radius: 2px;
+}
+
+.deco-heart {
+    font-size: 1.5rem;
+    animation: heartFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes heartFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Message */
+.card-message {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(253, 242, 248, 0.5) 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(249, 168, 212, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.message-text {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #6b2149;
+    text-align: center;
+    font-style: italic;
+    margin: 0;
+    letter-spacing: 0.02em;
+}
+
+/* Footer */
+.card-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.signature {
+    margin-bottom: 1.5rem;
+}
+
+.with-love {
+    font-family: var(--font-script);
+    font-size: 1.6rem;
+    color: #db2777;
+    margin: 0 0 0.5rem;
+}
+
+.signature-heart {
+    display: inline-block;
+}
+
+.signature-heart span {
+    font-size: 3rem;
+    display: inline-block;
+    animation: signatureHeart 2.5s ease-in-out infinite;
+    filter: drop-shadow(0 5px 15px rgba(236, 72, 153, 0.5));
+}
+
+@keyframes signatureHeart {
+
+    0%,
+    100% {
+        transform: scale(1) translateY(0);
+    }
+
+    25% {
+        transform: scale(1.1) translateY(-5px);
+    }
+
+    50% {
+        transform: scale(1) translateY(0);
+    }
+
+    75% {
+        transform: scale(1.05) translateY(-3px);
+    }
+}
+
+.flower-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.flower {
+    font-size: 1.5rem;
+    animation: flowerSway 2s ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    display: inline-block;
+}
+
+@keyframes flowerSway {
+
+    0%,
+    100% {
+        transform: rotate(-8deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(8deg) scale(1.1);
+    }
+}
+
+/* Reset Button */
+.reset-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin: 2rem auto 0;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #be185d 100%);
+    background-size: 200% auto;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font-script);
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow:
+        0 10px 30px rgba(190, 24, 93, 0.3),
+        0 5px 15px rgba(236, 72, 153, 0.2);
+    transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow:
+        0 15px 40px rgba(190, 24, 93, 0.4),
+        0 8px 20px rgba(236, 72, 153, 0.3);
+    background-position: right center;
+}
+
+.reset-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-icon {
+    font-size: 1.5rem;
+    animation: btnIconBounce 1.5s ease-in-out infinite;
+}
+
+@keyframes btnIconBounce {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-3px) rotate(-5deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .card-inner {
+        padding: 2rem 1.5rem;
+    }
+
+    .card-title {
+        font-size: 2.2rem;
+    }
+
+    .recipient-name {
+        font-size: 1.6rem;
+    }
+
+    .message-text {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .corner {
+        font-size: 1.1rem;
+    }
+}
+
+/* Extra animations for visible state */
+.valentine-card.visible .card-inner {
+    animation: gentleFloat 5s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+@keyframes gentleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}

@@ -1,0 +1,327 @@
+.envelope {
+    position: relative;
+    width: 340px;
+    height: 240px;
+    cursor: pointer;
+    perspective: 1000px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    user-select: none;
+}
+
+.envelope:hover {
+    transform: scale(1.05) translateY(-5px);
+}
+
+.envelope:active {
+    transform: scale(0.98);
+}
+
+/* Glow Effect */
+.envelope-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(ellipse, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+    border-radius: 30px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.envelope:hover .envelope-glow {
+    opacity: 1;
+}
+
+/* Envelope Body */
+.envelope-body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #fff9fb 0%, #fdf2f8 50%, #fce7f3 100%);
+    border-radius: 12px;
+    box-shadow:
+        0 20px 60px rgba(190, 24, 93, 0.2),
+        0 10px 30px rgba(236, 72, 153, 0.15),
+        inset 0 2px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -2px 10px rgba(249, 168, 212, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(249, 168, 212, 0.5);
+    overflow: hidden;
+}
+
+.envelope-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(135deg,
+            transparent 0%,
+            transparent 49%,
+            rgba(249, 168, 212, 0.3) 50%,
+            transparent 51%);
+    pointer-events: none;
+}
+
+/* Paper Inside */
+.envelope-paper {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    width: 85%;
+    height: 75%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1;
+}
+
+.envelope.opening .envelope-paper {
+    transform: translateX(-50%) translateY(-80px);
+}
+
+.paper-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 25px 20px;
+}
+
+.paper-lines span {
+    height: 3px;
+    background: linear-gradient(90deg, #f9a8d4 0%, #f472b6 50%, #f9a8d4 100%);
+    border-radius: 3px;
+    opacity: 0.4;
+}
+
+.paper-lines span:nth-child(1) {
+    width: 80%;
+}
+
+.paper-lines span:nth-child(2) {
+    width: 60%;
+}
+
+.paper-lines span:nth-child(3) {
+    width: 70%;
+}
+
+/* Envelope Flap */
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    transform-origin: top center;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 5;
+}
+
+.envelope-flap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #fce7f3 0%, #f9a8d4 100%);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    border-radius: 12px 12px 0 0;
+    box-shadow:
+        0 5px 20px rgba(236, 72, 153, 0.2),
+        inset 0 -10px 30px rgba(255, 255, 255, 0.3);
+}
+
+.flap-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #fff5f8 0%, #fdf2f8 100%);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    transform: rotateX(180deg);
+    transform-origin: top center;
+    backface-visibility: hidden;
+}
+
+.envelope.opening .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+/* Heart Seal */
+.heart-seal {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heart-emoji {
+    font-size: 3.5rem;
+    animation: heartPulse 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 5px 15px rgba(236, 72, 153, 0.4));
+    transition: transform 0.3s ease;
+}
+
+.envelope:hover .heart-emoji {
+    transform: scale(1.1);
+}
+
+.seal-glow {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: sealGlow 2s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.15);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+
+    55% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes sealGlow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Envelope Text */
+.envelope-text {
+    font-family: var(--font-script);
+    font-size: 1.3rem;
+    color: #be185d;
+    margin-top: 0.8rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: textPulse 2.5s ease-in-out infinite;
+}
+
+.tap-icon {
+    animation: tapBounce 1s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes tapBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* Decorative Hearts */
+.envelope-hearts {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+}
+
+.deco-heart {
+    font-size: 1.2rem;
+    animation: decoFloat 2s ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes decoFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(5deg);
+    }
+}
+
+/* Opening Animation particles */
+.envelope.opening::after {
+    content: '💕💗💝💖';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2rem;
+    animation: explodeHearts 1s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes explodeHearts {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -150%) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .envelope {
+        width: 290px;
+        height: 200px;
+    }
+
+    .heart-emoji {
+        font-size: 2.8rem;
+    }
+
+    .envelope-text {
+        font-size: 1.1rem;
+    }
+}
