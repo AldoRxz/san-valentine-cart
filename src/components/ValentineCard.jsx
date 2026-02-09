@@ -43,8 +43,8 @@ function ValentineCard({ onReset }) {
     // 3. Contador de besos → cada tap suma un beso
     const { kisses, addKiss } = useKissCounter(10, () => {
         showSecretMessage(
-            '¡10 Besitos! 💋',
-            '¡Has desbloqueado el logro de 10 besos! Ahora te debo 10 besos reales... ¡Pronto te los daré! 😘💕',
+            '¡10 Besitos para ti! 💋',
+            'Cada uno de estos besos representa lo mucho que te quiero. Pronto te los daré todos en persona... 😘💕',
             '💋'
         )
         createConfetti(150)
