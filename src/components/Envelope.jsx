@@ -5,7 +5,8 @@ function Envelope({ onOpen }) {
     const [isHovered, setIsHovered] = useState(false)
     const [isOpening, setIsOpening] = useState(false)
 
-    const handleClick = () => {
+    const handleOpen = (e) => {
+        e.preventDefault()
         if (isOpening) return
         setIsOpening(true)
 
@@ -18,13 +19,15 @@ function Envelope({ onOpen }) {
     return (
         <div
             className={`envelope ${isHovered ? 'hovered' : ''} ${isOpening ? 'opening' : ''}`}
-            onClick={handleClick}
+            onClick={handleOpen}
+            onTouchEnd={handleOpen}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             role="button"
             tabIndex={0}
-            onKeyPress={(e) => e.key === 'Enter' && handleClick()}
+            onKeyPress={(e) => e.key === 'Enter' && handleOpen(e)}
             aria-label="Abrir carta de San Valentín"
+            style={{ cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}
         >
             {/* Envelope Shadows and Glow */}
             <div className="envelope-glow"></div>
