@@ -1,17 +1,95 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import './ValentineCard.css'
+import {
+    useDoubleTap,
+    useLongPress,
+    useKissCounter,
+    useShakeDetection,
+    useSurpriseTimer,
+    createHeartExplosion,
+    createConfetti,
+    createFloatingKiss,
+    showSecretMessage,
+    requestMotionPermission
+} from '../hooks/useEasterEggs'
 
 function ValentineCard({ onReset }) {
     const [isVisible, setIsVisible] = useState(false)
     const [showMessage, setShowMessage] = useState(false)
     const [timeElapsed, setTimeElapsed] = useState({ months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 })
+    const [motionEnabled, setMotionEnabled] = useState(false)
 
     const recipientName = import.meta.env.VITE_RECIPIENT_NAME || 'Mi Amor'
 
     // Fecha de inicio desde variable de entorno
     const startDate = new Date(import.meta.env.VITE_START_DATE || '2025-06-13')
 
+    // ========== EASTER EGGS ==========
+
+    // 1. Doble tap en el corazón → mensaje secreto
+    const handleDoubleTap = useDoubleTap(() => {
+        showSecretMessage(
+            '¡Mensaje Secreto! 💕',
+            'Cada día que pasa me doy cuenta de lo afortunado que soy de tenerte. Eres mi persona favorita en el mundo. Te amo más de lo que las palabras pueden expresar. 💖',
+            '🥰'
+        )
+    })
+
+    // 2. Long press → explosión de corazones
+    const longPressHandlers = useLongPress(() => {
+        createHeartExplosion(60)
+    }, 800)
+
+    // 3. Contador de besos → cada tap suma un beso
+    const { kisses, addKiss } = useKissCounter(10, () => {
+        showSecretMessage(
+            '¡10 Besitos! 💋',
+            '¡Has desbloqueado el logro de 10 besos! Ahora te debo 10 besos reales... ¡Pronto te los daré! 😘💕',
+            '💋'
+        )
+        createConfetti(150)
+    })
+
+    // 4. Agitar el teléfono → confetti
+    const handleShake = useCallback(() => {
+        createConfetti(80)
+    }, [])
+
+    useShakeDetection(handleShake, 15)
+
+    // 5. Mensaje sorpresa después de 4 minutos (240000ms)
+    useSurpriseTimer(240000, () => {
+        showSecretMessage(
+            '¡Sorpresa Especial! ⭐',
+            'Has estado aquí por 4 minutos... Eso me hace muy feliz 🥺 Gracias por tomarte el tiempo de leer todo esto. Significa el mundo para mí. Te quiero con todo mi corazón. 💖',
+            '🌟'
+        )
+        createHeartExplosion(100)
+    })
+
+    // Manejar el tap en el corazón grande
+    const handleHeartTap = useCallback((e) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        const x = rect.left + rect.width / 2
+        const y = rect.top
+        createFloatingKiss(x, y)
+        addKiss()
+    }, [addKiss])
+
     useEffect(() => {
+        // Request motion permission on first interaction (for iOS)
+        const enableMotion = async () => {
+            const granted = await requestMotionPermission()
+            setMotionEnabled(granted)
+        }
+
+        // Try to enable on first touch
+        const handleFirstTouch = () => {
+            enableMotion()
+            window.removeEventListener('touchstart', handleFirstTouch)
+        }
+        window.addEventListener('touchstart', handleFirstTouch, { once: true })
+
         // Trigger entrance animation
         requestAnimationFrame(() => {
             setIsVisible(true)
@@ -144,6 +222,18 @@ function ValentineCard({ onReset }) {
                         </div>
                     </div>
                     <p className="counter-message">...y contando ✨</p>
+                </div>
+
+                {/* Interactive Heart - Easter Egg Area */}
+                <div
+                    className="easter-egg-heart"
+                    onClick={handleHeartTap}
+                    onDoubleClick={handleDoubleTap}
+                    {...longPressHandlers}
+                >
+                    <span className="big-heart">❤️</span>
+                    {kisses > 0 && <span className="kiss-counter">💋 x{kisses}</span>}
+                    <p className="heart-hint">¡Tócame! 👆</p>
                 </div>
 
                 {/* Signature */}
