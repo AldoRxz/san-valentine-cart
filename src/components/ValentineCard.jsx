@@ -8,8 +8,8 @@ function ValentineCard({ onReset }) {
 
     const recipientName = import.meta.env.VITE_RECIPIENT_NAME || 'Mi Amor'
 
-    // Fecha de inicio: 13 de junio de 2025
-    const startDate = new Date('2025-06-13T00:00:00')
+    // Fecha de inicio desde variable de entorno
+    const startDate = new Date(import.meta.env.VITE_START_DATE || '2025-06-13')
 
     useEffect(() => {
         // Trigger entrance animation
