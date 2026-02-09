@@ -4,8 +4,12 @@ import './ValentineCard.css'
 function ValentineCard({ onReset }) {
     const [isVisible, setIsVisible] = useState(false)
     const [showMessage, setShowMessage] = useState(false)
+    const [timeElapsed, setTimeElapsed] = useState({ months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 })
 
     const recipientName = import.meta.env.VITE_RECIPIENT_NAME || 'Mi Amor'
+
+    // Fecha de inicio: 13 de junio de 2025
+    const startDate = new Date('2025-06-13T00:00:00')
 
     useEffect(() => {
         // Trigger entrance animation
@@ -18,7 +22,33 @@ function ValentineCard({ onReset }) {
             setShowMessage(true)
         }, 800)
 
-        return () => clearTimeout(messageTimer)
+        // Actualizar el contador cada segundo
+        const updateCounter = () => {
+            const now = new Date()
+            const diff = now - startDate
+
+            const totalSeconds = Math.floor(diff / 1000)
+            const totalMinutes = Math.floor(totalSeconds / 60)
+            const totalHours = Math.floor(totalMinutes / 60)
+            const totalDays = Math.floor(totalHours / 24)
+
+            // Calcular meses y días aproximados
+            const months = Math.floor(totalDays / 30.44)
+            const days = Math.floor(totalDays % 30.44)
+            const hours = totalHours % 24
+            const minutes = totalMinutes % 60
+            const seconds = totalSeconds % 60
+
+            setTimeElapsed({ months, days, hours, minutes, seconds })
+        }
+
+        updateCounter()
+        const counterInterval = setInterval(updateCounter, 1000)
+
+        return () => {
+            clearTimeout(messageTimer)
+            clearInterval(counterInterval)
+        }
     }, [])
 
     const message = `${recipientName}, en este San Valentín quiero decirte lo mucho que te quiero. Me encanta que compartamos gustos y sigamos viendo animes juntos. Sé que a veces estoy ocupado, pero quiero seguir estudiando y esforzándome para pronto poder dedicarte todo el tiempo que te mereces. Gracias por todo, espero seguir compartiendo mucho más contigo.`
@@ -73,6 +103,47 @@ function ValentineCard({ onReset }) {
                     <p className="message-text">
                         {message}
                     </p>
+                </div>
+
+                {/* Foto de Nosotros */}
+                <div className="couple-photo-section">
+                    <div className="couple-photo-container">
+                        <img
+                            src="/photo.jpg"
+                            alt="Nosotros"
+                            className="couple-photo"
+                        />
+                        <div className="photo-heart">💕</div>
+                    </div>
+                    <p className="photo-caption">Tú & Yo 💖</p>
+                </div>
+
+                {/* Contador de tiempo juntos */}
+                <div className="time-counter-section">
+                    <h3 className="counter-title">💕 Tiempo desde que empezamos a hablar 💕</h3>
+                    <div className="time-counter">
+                        <div className="time-unit">
+                            <span className="time-number">{timeElapsed.months}</span>
+                            <span className="time-label">meses</span>
+                        </div>
+                        <div className="time-unit">
+                            <span className="time-number">{timeElapsed.days}</span>
+                            <span className="time-label">días</span>
+                        </div>
+                        <div className="time-unit">
+                            <span className="time-number">{timeElapsed.hours}</span>
+                            <span className="time-label">horas</span>
+                        </div>
+                        <div className="time-unit">
+                            <span className="time-number">{timeElapsed.minutes}</span>
+                            <span className="time-label">min</span>
+                        </div>
+                        <div className="time-unit">
+                            <span className="time-number">{timeElapsed.seconds}</span>
+                            <span className="time-label">seg</span>
+                        </div>
+                    </div>
+                    <p className="counter-message">...y contando ✨</p>
                 </div>
 
                 {/* Signature */}
