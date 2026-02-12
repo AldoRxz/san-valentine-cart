@@ -253,7 +253,7 @@ function ValentineCard({ onReset }) {
 
                 <Link to="/arbol" className="tree-nav-button">
                     <span>🌳</span>
-                    <span>Nuestro Árbol de Amor</span>
+                    <span>Nuestro Árbol</span>
                 </Link>
             </div>
         </div>
