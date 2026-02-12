@@ -188,7 +188,10 @@ function HeartTree() {
                             style={{
                                 left: `${(h.x / 500) * 100}%`,
                                 top: `${(h.y / 600) * 100}%`,
-                                animationDelay: `${h.delay}s`,
+                                animationDelay: `${h.delay}s, ${h.delay + 1}s`,
+                                animationDuration: `0.5s, ${2.5 + (h.id % 4) * 0.8}s`,
+                                '--float-x': `${(h.id % 2 === 0 ? 1 : -1) * (2 + (h.id % 5))}px`,
+                                '--float-y': `${(h.id % 3 === 0 ? -1 : 1) * (2 + (h.id % 4))}px`,
                             }}
                         />
                     ))}

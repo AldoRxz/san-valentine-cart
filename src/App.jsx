@@ -1,10 +1,13 @@
 import { useState, useRef } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import FloatingHearts from './components/FloatingHearts'
 import Sparkles from './components/Sparkles'
+import FallingPetals from './components/FallingPetals'
+import TwinklingStars from './components/TwinklingStars'
 import Envelope from './components/Envelope'
 import ValentineCard from './components/ValentineCard'
 import HeartTree from './components/HeartTree'
+import LoveLetter from './components/LoveLetter'
 import './App.css'
 
 function HomePage() {
@@ -57,12 +60,29 @@ function HomePage() {
   )
 }
 
-function App() {
+function AnimatedPage({ children }) {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/arbol" element={<HeartTree />} />
-    </Routes>
+    <div className="page-transition">
+      {children}
+    </div>
+  )
+}
+
+function App() {
+  const location = useLocation()
+
+  return (
+    <>
+      {/* Global ambient effects on all pages */}
+      <TwinklingStars />
+      <FallingPetals />
+
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<AnimatedPage><HomePage /></AnimatedPage>} />
+        <Route path="/arbol" element={<AnimatedPage><HeartTree /></AnimatedPage>} />
+        <Route path="/carta" element={<AnimatedPage><LoveLetter /></AnimatedPage>} />
+      </Routes>
+    </>
   )
 }
 

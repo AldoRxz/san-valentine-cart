@@ -255,6 +255,11 @@ function ValentineCard({ onReset }) {
                     <span>🌳</span>
                     <span>Nuestro Árbol</span>
                 </Link>
+
+                <Link to="/carta" className="tree-nav-button letter-nav-button">
+                    <span>✉️</span>
+                    <span>Carta de Amor</span>
+                </Link>
             </div>
         </div>
     )
