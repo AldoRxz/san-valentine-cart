@@ -9,6 +9,19 @@
     justify-content: center;
     overflow: hidden;
     padding: 2rem 1rem;
+    animation: pageEnter 0.6s ease forwards;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===== DECORATIVE BACKGROUND CIRCLES ===== */
@@ -215,21 +228,36 @@
     position: absolute;
     opacity: 0;
     transform: scale(0);
-    animation: heartPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: heartPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+        heartFloat 3s ease-in-out infinite;
+    animation-composition: accumulate;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: filter 0.3s ease;
     z-index: 3;
     margin-left: calc(var(--heart-size, 20px) * -0.5);
     margin-top: calc(var(--heart-size, 20px) * -0.5);
 }
 
 .branch-heart:hover {
-    transform: scale(1.5) !important;
+    filter: brightness(1.2) drop-shadow(0 4px 12px rgba(236, 72, 153, 0.5));
 }
 
 .branch-heart::before,
 .branch-heart::after {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Parallax floating - hearts gently sway at different speeds */
+@keyframes heartFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(var(--float-x, 2px), var(--float-y, -3px));
+    }
 }
 
 @keyframes heartPop {
@@ -519,6 +547,20 @@
 
 .tree-nav-button:active {
     transform: translateY(-1px) scale(0.98);
+}
+
+/* ===== LETTER NAV BUTTON ===== */
+.letter-nav-button {
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%);
+    box-shadow:
+        0 10px 30px rgba(168, 85, 247, 0.3),
+        0 5px 15px rgba(168, 85, 247, 0.2);
+}
+
+.letter-nav-button:hover {
+    box-shadow:
+        0 15px 40px rgba(168, 85, 247, 0.45),
+        0 8px 25px rgba(168, 85, 247, 0.25);
 }
 
 /* ===== CARD BUTTONS ROW ===== */
