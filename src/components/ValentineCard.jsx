@@ -258,7 +258,7 @@ function ValentineCard({ onReset }) {
 
                 <Link to="/carta" className="tree-nav-button letter-nav-button">
                     <span>✉️</span>
-                    <span>Carta de Amor</span>
+                    <span>Carta</span>
                 </Link>
             </div>
         </div>
