@@ -225,18 +225,6 @@ function ValentineCard({ onReset }) {
                     <p className="counter-message">...y contando ✨</p>
                 </div>
 
-                {/* Interactive Heart - Easter Egg Area */}
-                <div
-                    className="easter-egg-heart"
-                    onClick={handleHeartTap}
-                    onDoubleClick={handleDoubleTap}
-                    {...longPressHandlers}
-                >
-                    <span className="big-heart">❤️</span>
-                    {kisses > 0 && <span className="kiss-counter">💋 x{kisses}</span>}
-                    <p className="heart-hint">¡Tócame! 👆</p>
-                </div>
-
                 {/* Signature */}
                 <footer className="card-footer">
                     <div className="signature">
