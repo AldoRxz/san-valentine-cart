@@ -3,26 +3,41 @@ import { Link } from 'react-router-dom'
 import './LoveLetter.css'
 
 const letterLines = [
-    'Mi amor,',
+    'Mi Jacky hermosa,',
     '',
-    'Desde el momento en que te conocí,',
-    'mi vida se llenó de color y alegría.',
+    'Sé que no siempre he sido perfecto,',
+    'y que muchas veces no te di',
+    'el tiempo que te mereces.',
     '',
-    'Cada día a tu lado es un regalo',
-    'que atesoro con todo mi corazón.',
+    'Reconozco que hubo momentos',
+    'en los que no estuve presente',
+    'como debí haber estado,',
+    'y por eso te pido perdón.',
     '',
-    'Tu sonrisa ilumina mis días más oscuros,',
-    'y tu amor me da fuerzas para todo.',
+    'Pero quiero que sepas algo:',
+    'lo que siento por ti es real.',
+    'Quiero seguir a tu lado,',
+    'quiero demostrarte cada día',
+    'que puedo ser mejor para ti.',
     '',
-    'Gracias por ser mi compañera,',
-    'mi confidente, mi mejor amiga,',
-    'y el amor de mi vida.',
+    'Dame otra oportunidad',
+    'para quererte como mereces.',
+    'Para dedicarte mi tiempo,',
+    'mi atención, y todo mi corazón.',
     '',
-    'Te amo más de lo que las palabras',
-    'pueden expresar. 💕',
+    'Quiero seguir construyendo',
+    'nuestra historia juntos,',
+    'aprender de mis errores',
+    'y hacerte la mujer más feliz.',
     '',
-    'Con todo mi amor,',
-    'Para siempre tuyo ❤️',
+    'Porque tú eres mi persona favorita,',
+    'y no me imagino mi vida sin ti.',
+    '',
+    'Te quiero con todo lo que soy,',
+    'hoy y siempre. ❤️',
+    '',
+    'Tuyo por siempre,',
+    'Aldo 💕',
 ]
 
 function LoveLetter() {
@@ -75,6 +90,16 @@ function LoveLetter() {
                     <div className="letter-stamp">💌</div>
                     <div className="letter-wax">❤️</div>
                 </div>
+            </div>
+
+            {/* Photo below */}
+            <div className={`letter-photo-container ${isComplete ? 'visible' : ''}`}>
+                <img
+                    src="/Gemini_Generated_Image_f90a35f90a35f90a.png"
+                    alt="Nosotros"
+                    className="letter-photo"
+                />
+                <p className="letter-photo-caption">Tú y yo, siempre juntos 💕</p>
             </div>
 
             <div className={`letter-buttons ${isComplete ? 'visible' : ''}`}>
