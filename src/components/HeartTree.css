@@ -572,6 +572,11 @@
     margin-top: 1.5rem;
 }
 
+.card-buttons-row>* {
+    width: 200px;
+    text-align: center;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
     .tree-svg-container {
