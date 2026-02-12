@@ -1,11 +1,13 @@
 import { useState, useRef } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import FloatingHearts from './components/FloatingHearts'
 import Sparkles from './components/Sparkles'
 import Envelope from './components/Envelope'
 import ValentineCard from './components/ValentineCard'
+import HeartTree from './components/HeartTree'
 import './App.css'
 
-function App() {
+function HomePage() {
   const [isOpen, setIsOpen] = useState(false)
   const audioRef = useRef(null)
 
@@ -52,6 +54,15 @@ function App() {
         )}
       </main>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/arbol" element={<HeartTree />} />
+    </Routes>
   )
 }
 

@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import './ValentineCard.css'
 import {
     useDoubleTap,
@@ -255,11 +256,18 @@ function ValentineCard({ onReset }) {
                 </footer>
             </div>
 
-            {/* Reset Button */}
-            <button className="reset-button" onClick={onReset}>
-                <span className="btn-icon">💌</span>
-                <span className="btn-text">Ver de nuevo</span>
-            </button>
+            {/* Buttons */}
+            <div className="card-buttons-row">
+                <button className="reset-button" onClick={onReset}>
+                    <span className="btn-icon">💌</span>
+                    <span className="btn-text">Ver de nuevo</span>
+                </button>
+
+                <Link to="/arbol" className="tree-nav-button">
+                    <span>🌳</span>
+                    <span>Nuestro Árbol de Amor</span>
+                </Link>
+            </div>
         </div>
     )
 }
