@@ -151,25 +151,25 @@
 /* ===== TRUNK SVG PATH ===== */
 .tree-trunk-path {
     fill: none;
-    stroke: #6B3A2A;
+    stroke: #4a2c17;
     stroke-width: 10;
     stroke-linecap: round;
     stroke-dasharray: 400;
     stroke-dashoffset: 400;
     animation: drawPath 1.8s ease-out 0.3s forwards;
-    filter: drop-shadow(2px 2px 3px rgba(107, 58, 42, 0.3));
+    filter: drop-shadow(2px 2px 4px rgba(74, 44, 23, 0.4));
 }
 
 /* ===== BRANCH SVG PATHS ===== */
 .tree-branch-path {
     fill: none;
-    stroke: #8B4513;
-    stroke-width: 3.5;
+    stroke: #5D3A1A;
+    stroke-width: 3;
     stroke-linecap: round;
     stroke-dasharray: 300;
     stroke-dashoffset: 300;
     animation: drawPath 0.8s ease-out forwards;
-    filter: drop-shadow(1px 1px 2px rgba(139, 69, 19, 0.2));
+    filter: drop-shadow(1px 1px 2px rgba(93, 58, 26, 0.25));
 }
 
 @keyframes drawPath {
@@ -178,29 +178,58 @@
     }
 }
 
+/* ===== CSS HEART SHAPE ===== */
+.css-heart {
+    position: relative;
+    display: inline-block;
+    width: var(--heart-size, 20px);
+    height: calc(var(--heart-size, 20px) * 0.9);
+    pointer-events: auto;
+}
+
+.css-heart::before,
+.css-heart::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: calc(var(--heart-size, 20px) * 0.52);
+    height: calc(var(--heart-size, 20px) * 0.8);
+    background: var(--heart-color, #ff1493);
+    border-radius: calc(var(--heart-size, 20px) * 0.52) calc(var(--heart-size, 20px) * 0.52) 0 0;
+}
+
+.css-heart::before {
+    left: calc(var(--heart-size, 20px) * 0.5);
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.css-heart::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
 /* ===== HEARTS AT BRANCH TIPS ===== */
 .branch-heart {
     position: absolute;
     opacity: 0;
     transform: scale(0);
     animation: heartPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    filter: drop-shadow(0 2px 6px rgba(236, 72, 153, 0.35));
     cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition: transform 0.3s ease;
     z-index: 3;
-    /* Center the emoji on the position */
-    margin-left: -0.5em;
-    margin-top: -0.5em;
-}
-
-.extra-heart {
-    z-index: 2;
-    filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.25));
+    margin-left: calc(var(--heart-size, 20px) * -0.5);
+    margin-top: calc(var(--heart-size, 20px) * -0.5);
 }
 
 .branch-heart:hover {
-    transform: scale(1.6) !important;
-    filter: drop-shadow(0 6px 18px rgba(236, 72, 153, 0.6));
+    transform: scale(1.5) !important;
+}
+
+.branch-heart::before,
+.branch-heart::after {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 @keyframes heartPop {
@@ -210,12 +239,12 @@
     }
 
     60% {
-        opacity: 1;
-        transform: scale(1.25) rotate(5deg);
+        opacity: 0.9;
+        transform: scale(1.2) rotate(5deg);
     }
 
     100% {
-        opacity: 1;
+        opacity: 0.85;
         transform: scale(1) rotate(0deg);
     }
 }
@@ -223,14 +252,19 @@
 /* ===== BIG HEART ON TOP ===== */
 .tree-top-heart {
     position: absolute;
-    top: 15%;
+    top: 16%;
     left: 50%;
     transform: translateX(-50%) scale(0);
-    font-size: clamp(2rem, 6vw, 3rem);
     animation: crownHeartAppear 1s cubic-bezier(0.34, 1.56, 0.64, 1) 3.5s forwards,
         crownPulse 2.5s ease-in-out 4.5s infinite;
-    filter: drop-shadow(0 6px 20px rgba(236, 72, 153, 0.5));
     z-index: 4;
+}
+
+.tree-top-heart::before,
+.tree-top-heart::after {
+    box-shadow:
+        0 4px 15px rgba(255, 20, 147, 0.5),
+        0 0 25px rgba(255, 20, 147, 0.2);
 }
 
 @keyframes crownHeartAppear {
@@ -302,7 +336,7 @@
     }
 
     8% {
-        opacity: 0.6;
+        opacity: 0.5;
     }
 
     25% {
@@ -310,7 +344,7 @@
     }
 
     50% {
-        opacity: 0.4;
+        opacity: 0.35;
         transform: translateY(50vh) rotate(150deg) translateX(-8px) scale(0.9);
     }
 
