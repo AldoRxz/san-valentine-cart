@@ -6,71 +6,71 @@ import './HeartTree.css'
 
 function HeartTree() {
     const heartEmojis = ['💖', '💗', '💕', '💓', '💝', '❤️', '💘', '🩷', '💞']
-    const flowerEmojis = ['🌸', '🌺', '🌷']
 
-    // Generate heart leaves in a lush oval crown shape
-    const heartLeaves = useMemo(() => {
-        const leaves = []
-        const totalHearts = 55
-        let index = 0
+    // SVG branch paths - organic curves for a natural tree look
+    const branches = [
+        // Left branches
+        { d: 'M 250 420 Q 200 380 150 340 Q 120 320 100 280', hearts: [{ x: 100, y: 275 }, { x: 130, y: 310 }, { x: 155, y: 335 }] },
+        { d: 'M 250 380 Q 210 340 180 290 Q 160 260 130 230', hearts: [{ x: 128, y: 225 }, { x: 165, y: 255 }, { x: 185, y: 285 }] },
+        { d: 'M 250 340 Q 220 300 200 260 Q 180 230 150 190', hearts: [{ x: 148, y: 185 }, { x: 182, y: 228 }, { x: 205, y: 255 }] },
+        { d: 'M 250 300 Q 230 260 210 230 Q 195 210 180 170', hearts: [{ x: 178, y: 165 }, { x: 198, y: 208 }] },
+        { d: 'M 250 270 Q 235 240 225 210 Q 218 190 210 160', hearts: [{ x: 208, y: 155 }] },
+        // Sub-branches left
+        { d: 'M 150 340 Q 130 330 105 340 Q 90 348 75 330', hearts: [{ x: 73, y: 325 }] },
+        { d: 'M 130 230 Q 115 215 90 220', hearts: [{ x: 87, y: 215 }] },
+        { d: 'M 150 190 Q 130 175 110 165', hearts: [{ x: 108, y: 160 }] },
 
-        // Create oval canopy using parametric distribution
-        for (let i = 0; i < totalHearts; i++) {
-            // Golden angle distribution for natural look
-            const angle = i * 137.508 * (Math.PI / 180)
-            const r = Math.sqrt(i / totalHearts)
+        // Right branches
+        { d: 'M 250 410 Q 300 370 340 330 Q 365 305 390 270', hearts: [{ x: 390, y: 265 }, { x: 360, y: 300 }, { x: 335, y: 325 }] },
+        { d: 'M 250 370 Q 290 330 320 280 Q 340 250 370 220', hearts: [{ x: 370, y: 215 }, { x: 338, y: 248 }, { x: 315, y: 275 }] },
+        { d: 'M 250 330 Q 280 290 300 250 Q 315 225 340 190', hearts: [{ x: 340, y: 185 }, { x: 312, y: 222 }, { x: 295, y: 248 }] },
+        { d: 'M 250 290 Q 270 255 290 220 Q 305 195 320 165', hearts: [{ x: 320, y: 160 }, { x: 302, y: 193 }] },
+        { d: 'M 250 260 Q 265 230 275 200 Q 282 180 295 155', hearts: [{ x: 295, y: 150 }] },
+        // Sub-branches right
+        { d: 'M 340 330 Q 365 320 390 330 Q 405 338 420 315', hearts: [{ x: 420, y: 310 }] },
+        { d: 'M 370 220 Q 390 210 405 215', hearts: [{ x: 408, y: 210 }] },
+        { d: 'M 340 190 Q 360 175 380 170', hearts: [{ x: 383, y: 165 }] },
 
-            // Oval shape: wider horizontally
-            const radiusX = 42 + Math.random() * 5
-            const radiusY = 38 + Math.random() * 5
+        // Top branches
+        { d: 'M 250 250 Q 248 210 245 180 Q 242 155 240 130', hearts: [{ x: 238, y: 125 }] },
+        { d: 'M 250 250 Q 255 215 260 185 Q 263 160 268 135', hearts: [{ x: 268, y: 130 }] },
+    ]
 
-            const x = 50 + r * radiusX * Math.cos(angle)
-            const y = 38 + r * radiusY * Math.sin(angle)
-
-            // Skip if outside bounds
-            if (x < 5 || x > 95 || y < 2 || y > 78) continue
-
-            leaves.push({
-                id: index,
-                x,
-                y,
-                emoji: heartEmojis[index % heartEmojis.length],
-                delay: 2.0 + index * 0.05,
-                scale: 0.7 + Math.random() * 0.5 + (1 - r) * 0.3,
+    // Generate extra hearts floating around branch tips
+    const extraHearts = useMemo(() => {
+        const hearts = []
+        let idx = 0
+        branches.forEach((branch) => {
+            branch.hearts.forEach((h) => {
+                // Add 1-2 extra hearts near each branch tip
+                for (let i = 0; i < 1 + Math.floor(Math.random() * 2); i++) {
+                    hearts.push({
+                        id: idx++,
+                        x: h.x + (Math.random() - 0.5) * 30,
+                        y: h.y + (Math.random() - 0.5) * 25,
+                        emoji: heartEmojis[idx % heartEmojis.length],
+                        delay: 2.5 + idx * 0.06,
+                        scale: 0.6 + Math.random() * 0.5,
+                    })
+                }
             })
-            index++
-        }
-        return leaves
-    }, [])
-
-    // Some flowers scattered in the crown
-    const flowers = useMemo(() => {
-        return Array.from({ length: 8 }, (_, i) => {
-            const angle = (i / 8) * Math.PI * 2
-            const r = 0.4 + Math.random() * 0.3
-            return {
-                id: i,
-                x: 50 + r * 35 * Math.cos(angle),
-                y: 38 + r * 30 * Math.sin(angle),
-                emoji: flowerEmojis[i % flowerEmojis.length],
-                delay: 3.5 + i * 0.15,
-            }
         })
+        return hearts
     }, [])
 
-    // Generate falling hearts
+    // Falling hearts
     const fallingHearts = useMemo(() => {
-        return Array.from({ length: 12 }, (_, i) => ({
+        return Array.from({ length: 10 }, (_, i) => ({
             id: i,
             x: 10 + Math.random() * 80,
             emoji: heartEmojis[i % heartEmojis.length],
             delay: 5 + Math.random() * 10,
             duration: 7 + Math.random() * 6,
-            size: 0.5 + Math.random() * 0.5,
+            size: 0.5 + Math.random() * 0.4,
         }))
     }, [])
 
-    // Generate grass blades
+    // Grass blades
     const grassBlades = useMemo(() => {
         return Array.from({ length: 28 }, (_, i) => ({
             id: i,
@@ -81,9 +81,9 @@ function HeartTree() {
         }))
     }, [])
 
-    // Generate sparkle particles
+    // Sparkle particles
     const sparkles = useMemo(() => {
-        return Array.from({ length: 18 }, (_, i) => ({
+        return Array.from({ length: 15 }, (_, i) => ({
             id: i,
             x: 8 + Math.random() * 84,
             y: 5 + Math.random() * 75,
@@ -93,23 +93,11 @@ function HeartTree() {
         }))
     }, [])
 
-    // Fireflies
-    const fireflies = useMemo(() => {
-        return Array.from({ length: 10 }, (_, i) => ({
-            id: i,
-            x: 10 + Math.random() * 80,
-            y: 10 + Math.random() * 60,
-            delay: Math.random() * 8,
-            duration: 4 + Math.random() * 5,
-        }))
-    }, [])
-
     return (
         <div className="heart-tree-page">
             <FloatingHearts />
             <Sparkles />
 
-            {/* Decorative circles background */}
             <div className="deco-circle deco-circle-1"></div>
             <div className="deco-circle deco-circle-2"></div>
             <div className="deco-circle deco-circle-3"></div>
@@ -118,88 +106,82 @@ function HeartTree() {
             <p className="page-intro">Un árbol que crece con cada momento juntos 💕</p>
 
             <div className="tree-scene">
-                <div className="tree-container">
-                    {/* Glow behind tree */}
-                    <div className="tree-glow"></div>
-                    <div className="tree-glow-secondary"></div>
+                <div className="tree-svg-container">
+                    <svg viewBox="0 0 500 600" className="tree-svg" preserveAspectRatio="xMidYMid meet">
+                        {/* Trunk */}
+                        <path
+                            d="M 245 580 Q 245 520 247 480 Q 248 450 249 420 Q 250 400 250 250"
+                            className="tree-trunk-path"
+                        />
+                        {/* Trunk thickness line */}
+                        <path
+                            d="M 255 580 Q 255 520 253 480 Q 252 450 251 420 Q 250 400 250 250"
+                            className="tree-trunk-path"
+                        />
 
-                    {/* Tree trunk */}
-                    <div className="tree-trunk">
-                        <div className="trunk-texture"></div>
-                        <div className="trunk-roots trunk-root-left"></div>
-                        <div className="trunk-roots trunk-root-right"></div>
-                    </div>
-
-                    {/* Tree Crown with heart leaves */}
-                    <div className="tree-crown">
-                        {/* Crown background shape */}
-                        <div className="crown-bg"></div>
-
-                        {/* Big heart on top */}
-                        <div className="tree-top-heart">💖</div>
-
-                        {/* Heart leaves */}
-                        {heartLeaves.map((leaf) => (
-                            <span
-                                key={leaf.id}
-                                className="heart-leaf"
-                                style={{
-                                    left: `${leaf.x}%`,
-                                    top: `${leaf.y}%`,
-                                    animationDelay: `${leaf.delay}s`,
-                                    fontSize: `${leaf.scale}em`,
-                                }}
-                            >
-                                {leaf.emoji}
-                            </span>
-                        ))}
-
-                        {/* Flowers in the crown */}
-                        {flowers.map((f) => (
-                            <span
-                                key={`flower-${f.id}`}
-                                className="heart-leaf flower-leaf"
-                                style={{
-                                    left: `${f.x}%`,
-                                    top: `${f.y}%`,
-                                    animationDelay: `${f.delay}s`,
-                                    fontSize: '1em',
-                                }}
-                            >
-                                {f.emoji}
-                            </span>
-                        ))}
-
-                        {/* Sparkle particles */}
-                        {sparkles.map((s) => (
-                            <div
-                                key={s.id}
-                                className="tree-sparkle"
-                                style={{
-                                    left: `${s.x}%`,
-                                    top: `${s.y}%`,
-                                    animationDelay: `${s.delay}s`,
-                                    animationDuration: `${s.duration}s`,
-                                    width: `${s.size}px`,
-                                    height: `${s.size}px`,
-                                }}
+                        {/* Branches */}
+                        {branches.map((branch, i) => (
+                            <path
+                                key={i}
+                                d={branch.d}
+                                className="tree-branch-path"
+                                style={{ animationDelay: `${1.5 + i * 0.1}s` }}
                             />
                         ))}
+                    </svg>
 
-                        {/* Fireflies */}
-                        {fireflies.map((f) => (
-                            <div
-                                key={f.id}
-                                className="firefly"
+                    {/* Hearts at branch tips */}
+                    {branches.map((branch, bi) =>
+                        branch.hearts.map((h, hi) => (
+                            <span
+                                key={`bh-${bi}-${hi}`}
+                                className="branch-heart"
                                 style={{
-                                    left: `${f.x}%`,
-                                    top: `${f.y}%`,
-                                    animationDelay: `${f.delay}s`,
-                                    animationDuration: `${f.duration}s`,
+                                    left: `${(h.x / 500) * 100}%`,
+                                    top: `${(h.y / 600) * 100}%`,
+                                    animationDelay: `${2.0 + bi * 0.1 + hi * 0.08}s`,
+                                    fontSize: `${0.9 + Math.random() * 0.6}rem`,
                                 }}
-                            />
-                        ))}
-                    </div>
+                            >
+                                {heartEmojis[(bi + hi) % heartEmojis.length]}
+                            </span>
+                        ))
+                    )}
+
+                    {/* Extra hearts floating near branches */}
+                    {extraHearts.map((h) => (
+                        <span
+                            key={`eh-${h.id}`}
+                            className="branch-heart extra-heart"
+                            style={{
+                                left: `${(h.x / 500) * 100}%`,
+                                top: `${(h.y / 600) * 100}%`,
+                                animationDelay: `${h.delay}s`,
+                                fontSize: `${h.scale}rem`,
+                            }}
+                        >
+                            {h.emoji}
+                        </span>
+                    ))}
+
+                    {/* Big heart at the very top */}
+                    <div className="tree-top-heart">💖</div>
+
+                    {/* Sparkle particles */}
+                    {sparkles.map((s) => (
+                        <div
+                            key={s.id}
+                            className="tree-sparkle"
+                            style={{
+                                left: `${s.x}%`,
+                                top: `${s.y}%`,
+                                animationDelay: `${s.delay}s`,
+                                animationDuration: `${s.duration}s`,
+                                width: `${s.size}px`,
+                                height: `${s.size}px`,
+                            }}
+                        />
+                    ))}
 
                     {/* Ground */}
                     <div className="tree-ground">
@@ -215,7 +197,6 @@ function HeartTree() {
                                 }}
                             />
                         ))}
-                        {/* Little flowers on ground */}
                         <span className="ground-flower" style={{ left: 'calc(50% - 60px)', animationDelay: '2s' }}>🌸</span>
                         <span className="ground-flower" style={{ left: 'calc(50% + 50px)', animationDelay: '2.5s' }}>🌷</span>
                         <span className="ground-flower" style={{ left: 'calc(50% - 30px)', animationDelay: '2.8s' }}>🌼</span>
