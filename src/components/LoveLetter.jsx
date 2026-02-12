@@ -77,6 +77,16 @@ function LoveLetter() {
                 </div>
             </div>
 
+            {/* Photo below */}
+            <div className={`letter-photo-container ${isComplete ? 'visible' : ''}`}>
+                <img
+                    src="/Gemini_Generated_Image_f90a35f90a35f90a.png"
+                    alt="Nosotros"
+                    className="letter-photo"
+                />
+                <p className="letter-photo-caption">Tú y yo, siempre juntos 💕</p>
+            </div>
+
             <div className={`letter-buttons ${isComplete ? 'visible' : ''}`}>
                 <Link to="/" className="letter-back-btn">
                     <span>💌</span>
