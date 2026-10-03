@@ -1,29 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import './LoveLetter.css'
-
-const letterLines = [
-    'Mi amor,',
-    '',
-    'Desde el momento en que te conocí,',
-    'mi vida se llenó de color y alegría.',
-    '',
-    'Cada día a tu lado es un regalo',
-    'que atesoro con todo mi corazón.',
-    '',
-    'Tu sonrisa ilumina mis días más oscuros,',
-    'y tu amor me da fuerzas para todo.',
-    '',
-    'Gracias por ser mi compañera,',
-    'mi confidente, mi mejor amiga,',
-    'y el amor de mi vida.',
-    '',
-    'Te amo más de lo que las palabras',
-    'pueden expresar. 💕',
-    '',
-    'Con todo mi amor,',
-    'Para siempre tuyo ❤️',
-]
+import { letterLines, letterPhoto } from '../config'
 
 function LoveLetter() {
     const [visibleChars, setVisibleChars] = useState(0)
@@ -77,15 +55,17 @@ function LoveLetter() {
                 </div>
             </div>
 
-            {/* Photo below */}
-            <div className={`letter-photo-container ${isComplete ? 'visible' : ''}`}>
-                <img
-                    src="/Gemini_Generated_Image_f90a35f90a35f90a.png"
-                    alt="Nosotros"
-                    className="letter-photo"
-                />
-                <p className="letter-photo-caption">Tú y yo, siempre juntos 💕</p>
-            </div>
+            {/* Photo below (optional) */}
+            {letterPhoto.src && (
+                <div className={`letter-photo-container ${isComplete ? 'visible' : ''}`}>
+                    <img
+                        src={letterPhoto.src}
+                        alt="Nosotros"
+                        className="letter-photo"
+                    />
+                    <p className="letter-photo-caption">{letterPhoto.caption}</p>
+                </div>
+            )}
 
             <div className={`letter-buttons ${isComplete ? 'visible' : ''}`}>
                 <Link to="/" className="letter-back-btn">

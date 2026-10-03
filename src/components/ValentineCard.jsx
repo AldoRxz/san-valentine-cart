@@ -13,6 +13,16 @@ import {
     showSecretMessage,
     requestMotionPermission
 } from '../hooks/useEasterEggs'
+import {
+    recipientName,
+    senderName,
+    startDate,
+    counterTitle,
+    cardGif,
+    cardPhoto,
+    cardMessage,
+    secretMessages
+} from '../config'
 
 function ValentineCard({ onReset }) {
     const [isVisible, setIsVisible] = useState(false)
@@ -20,20 +30,12 @@ function ValentineCard({ onReset }) {
     const [timeElapsed, setTimeElapsed] = useState({ months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 })
     const [motionEnabled, setMotionEnabled] = useState(false)
 
-    const recipientName = import.meta.env.VITE_RECIPIENT_NAME || 'Mi Amor'
-
-    // Fecha de inicio desde variable de entorno
-    const startDate = new Date(import.meta.env.VITE_START_DATE || '2025-06-13')
-
     // ========== EASTER EGGS ==========
 
     // 1. Doble tap en el corazón → mensaje secreto
     const handleDoubleTap = useDoubleTap(() => {
-        showSecretMessage(
-            '¡Mensaje Secreto! 💕',
-            'Cada día que pasa me doy cuenta de lo afortunado que soy de tenerte. Eres mi persona favorita en el mundo. Te amo más de lo que las palabras pueden expresar. 💖',
-            '🥰'
-        )
+        const { title, message, emoji } = secretMessages.doubleTap
+        showSecretMessage(title, message, emoji)
     })
 
     // 2. Long press → explosión de corazones
@@ -43,11 +45,8 @@ function ValentineCard({ onReset }) {
 
     // 3. Contador de besos → cada tap suma un beso
     const { kisses, addKiss } = useKissCounter(10, () => {
-        showSecretMessage(
-            '¡10 Besitos para ti! 💋',
-            'Cada uno de estos besos representa lo mucho que te quiero. Pronto te los daré todos en persona... 😘💕',
-            '💋'
-        )
+        const { title, message, emoji } = secretMessages.kisses
+        showSecretMessage(title, message, emoji)
         createConfetti(150)
     })
 
@@ -60,11 +59,8 @@ function ValentineCard({ onReset }) {
 
     // 5. Mensaje sorpresa después de 4 minutos (240000ms)
     useSurpriseTimer(240000, () => {
-        showSecretMessage(
-            '¡Sorpresa Especial! ⭐',
-            'Has estado aquí por 4 minutos... Eso me hace muy feliz 🥺 Gracias por tomarte el tiempo de leer todo esto. Significa el mundo para mí. Te quiero con todo mi corazón. 💖',
-            '🌟'
-        )
+        const { title, message, emoji } = secretMessages.surprise
+        showSecretMessage(title, message, emoji)
         createHeartExplosion(100)
     })
 
@@ -101,6 +97,10 @@ function ValentineCard({ onReset }) {
             setShowMessage(true)
         }, 800)
 
+        if (!startDate) {
+            return () => clearTimeout(messageTimer)
+        }
+
         // Actualizar el contador cada segundo
         const updateCounter = () => {
             const now = new Date()
@@ -129,8 +129,6 @@ function ValentineCard({ onReset }) {
             clearInterval(counterInterval)
         }
     }, [])
-
-    const message = `${recipientName}, en este San Valentín quiero decirte lo mucho que te quiero. Me encanta que compartamos gustos y sigamos viendo animes juntos. Sé que a veces estoy ocupado, pero quiero seguir estudiando y esforzándome para pronto poder dedicarte todo el tiempo que te mereces. Gracias por todo, espero seguir compartiendo mucho más contigo.`
 
     return (
         <div className={`valentine-card ${isVisible ? 'visible' : ''}`}>
@@ -168,67 +166,74 @@ function ValentineCard({ onReset }) {
                     </div>
                 </header>
 
-                {/* Anime GIF */}
-                <div className="anime-gif-container">
-                    <img
-                        src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExemp0aHNoeHpsNmg5cnJhYzk3MmF2ZHdlcXU2NTc2dThhOXFqenZwdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eHvTEDvKPjdc4ovRUb/giphy.gif"
-                        alt="Anime couple"
-                        className="anime-gif"
-                    />
-                </div>
+                {/* GIF (opcional) */}
+                {cardGif && (
+                    <div className="anime-gif-container">
+                        <img
+                            src={cardGif}
+                            alt="Pareja animada"
+                            className="anime-gif"
+                        />
+                    </div>
+                )}
 
                 {/* Message */}
                 <div className={`card-message ${showMessage ? 'show' : ''}`}>
                     <p className="message-text">
-                        {message}
+                        {cardMessage}
                     </p>
                 </div>
 
-                {/* Foto de Nosotros */}
-                <div className="couple-photo-section">
-                    <div className="couple-photo-container">
-                        <img
-                            src="/photo.jpg"
-                            alt="Nosotros"
-                            className="couple-photo"
-                        />
-                        <div className="photo-heart">💕</div>
+                {/* Foto de Nosotros (opcional) */}
+                {cardPhoto.src && (
+                    <div className="couple-photo-section">
+                        <div className="couple-photo-container">
+                            <img
+                                src={cardPhoto.src}
+                                alt="Nosotros"
+                                className="couple-photo"
+                            />
+                            <div className="photo-heart">💕</div>
+                        </div>
+                        <p className="photo-caption">{cardPhoto.caption}</p>
                     </div>
-                    <p className="photo-caption">Tú & Yo 💖</p>
-                </div>
+                )}
 
-                {/* Contador de tiempo juntos */}
-                <div className="time-counter-section">
-                    <h3 className="counter-title">💕 Tiempo desde que empezamos a hablar 💕</h3>
-                    <div className="time-counter">
-                        <div className="time-unit">
-                            <span className="time-number">{timeElapsed.months}</span>
-                            <span className="time-label">meses</span>
+                {/* Contador de tiempo juntos (opcional) */}
+                {startDate && (
+                    <div className="time-counter-section">
+                        <h3 className="counter-title">{counterTitle}</h3>
+                        <div className="time-counter">
+                            <div className="time-unit">
+                                <span className="time-number">{timeElapsed.months}</span>
+                                <span className="time-label">meses</span>
+                            </div>
+                            <div className="time-unit">
+                                <span className="time-number">{timeElapsed.days}</span>
+                                <span className="time-label">días</span>
+                            </div>
+                            <div className="time-unit">
+                                <span className="time-number">{timeElapsed.hours}</span>
+                                <span className="time-label">horas</span>
+                            </div>
+                            <div className="time-unit">
+                                <span className="time-number">{timeElapsed.minutes}</span>
+                                <span className="time-label">min</span>
+                            </div>
+                            <div className="time-unit">
+                                <span className="time-number">{timeElapsed.seconds}</span>
+                                <span className="time-label">seg</span>
+                            </div>
                         </div>
-                        <div className="time-unit">
-                            <span className="time-number">{timeElapsed.days}</span>
-                            <span className="time-label">días</span>
-                        </div>
-                        <div className="time-unit">
-                            <span className="time-number">{timeElapsed.hours}</span>
-                            <span className="time-label">horas</span>
-                        </div>
-                        <div className="time-unit">
-                            <span className="time-number">{timeElapsed.minutes}</span>
-                            <span className="time-label">min</span>
-                        </div>
-                        <div className="time-unit">
-                            <span className="time-number">{timeElapsed.seconds}</span>
-                            <span className="time-label">seg</span>
-                        </div>
+                        <p className="counter-message">...y contando ✨</p>
                     </div>
-                    <p className="counter-message">...y contando ✨</p>
-                </div>
+                )}
 
                 {/* Signature */}
                 <footer className="card-footer">
                     <div className="signature">
                         <p className="with-love">Con todo mi amor,</p>
+                        {senderName && <p className="with-love">{senderName}</p>}
                         <div className="signature-heart">
                             <span>❤️</span>
                         </div>

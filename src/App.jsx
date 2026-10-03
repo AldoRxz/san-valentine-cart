@@ -8,6 +8,7 @@ import Envelope from './components/Envelope'
 import ValentineCard from './components/ValentineCard'
 import HeartTree from './components/HeartTree'
 import LoveLetter from './components/LoveLetter'
+import { songUrl } from './config'
 import './App.css'
 
 function HomePage() {
@@ -38,13 +39,15 @@ function HomePage() {
 
   return (
     <div className="app">
-      {/* Background Music */}
-      <audio
-        ref={audioRef}
-        src="/Manuel Medrano - Donde Nadie Pueda Ir - Manuel Medrano.mp3"
-        loop
-        preload="auto"
-      />
+      {/* Background Music (optional) */}
+      {songUrl && (
+        <audio
+          ref={audioRef}
+          src={songUrl}
+          loop
+          preload="auto"
+        />
+      )}
 
       <FloatingHearts />
       <Sparkles />

@@ -39,9 +39,10 @@ npm install
 cp .env.example .env
 ```
 
-4. Edit `.env` and set your recipient's name:
+4. Edit `.env` with your data (see [Customization](#-customization)):
 ```env
 VITE_RECIPIENT_NAME=YourLoveName
+VITE_SENDER_NAME=YourName
 ```
 
 5. Start the development server:
@@ -53,16 +54,26 @@ npm run dev
 
 ## 🎨 Customization
 
-### Change Recipient Name
+Everything personal lives in two places, so the card can be reused for anyone:
 
-Edit the `.env` file:
-```env
-VITE_RECIPIENT_NAME=Maria
-```
+### `.env` — short values
 
-### Customize the Message
+| Variable | Description |
+| --- | --- |
+| `VITE_RECIPIENT_NAME` | Recipient's name (default: `Mi Amor`) |
+| `VITE_SENDER_NAME` | Name that signs the card and letter (optional) |
+| `VITE_START_DATE` | Date for the "time together" counter, `YYYY-MM-DD`. Empty hides the counter |
+| `VITE_COUNTER_TITLE` | Title shown above the counter |
+| `VITE_CARD_PHOTO` / `VITE_CARD_PHOTO_CAPTION` | Photo on the main card. Empty hides it |
+| `VITE_LETTER_PHOTO` / `VITE_LETTER_PHOTO_CAPTION` | Photo shown after the letter. Empty hides it |
+| `VITE_SONG_URL` | Background song (path in `public/` or URL) |
+| `VITE_CARD_GIF_URL` | GIF on the main card |
 
-Edit `src/components/ValentineCard.jsx` and modify the `message` variable with your own love letter.
+Photos go in the `public/` folder and are referenced by path, e.g. `VITE_CARD_PHOTO=/us.jpg`. They are optional — if you don't set them the card works without them.
+
+### `src/config.js` — long texts
+
+Edit the card message, the love letter (`letterLines`) and the easter-egg secret messages directly in this file.
 
 ## 📦 Build for Production
 
@@ -99,6 +110,7 @@ san-valentine-cart/
 │   │   ├── Sparkles.css
 │   │   ├── ValentineCard.jsx  # Main card with message
 │   │   └── ValentineCard.css
+│   ├── config.js          # All personalizable content
 │   ├── App.jsx
 │   ├── App.css
 │   ├── index.css
